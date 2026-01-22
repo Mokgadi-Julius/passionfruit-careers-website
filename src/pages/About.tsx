@@ -8,9 +8,9 @@ import {
 import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
-import aboutHero from '../assets/pages/about-hero.png';
-import aboutFounder from '../assets/pages/about-founder.png';
-import aboutValues from '../assets/pages/about-values.png';
+import aboutHero from '../assets/generated/hero-about.png';
+import aboutFounder from '../assets/generated/testimonial-precious.png';
+import aboutValues from '../assets/generated/success-hired.png';
 
 const About = () => {
   const values = [

@@ -8,9 +8,9 @@ import {
 import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
-import blogAiFuture from '../assets/pages/blog-ai-future.png';
-import blogInterview from '../assets/pages/blog-interview.png';
-import blogResume from '../assets/pages/blog-resume.png';
+import blogAiFuture from '../assets/generated/hero-blog.png';
+import blogInterview from '../assets/generated/step-upload.png';
+import blogResume from '../assets/generated/service-resume.png';
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -141,11 +141,10 @@ const Blog = () => {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    selectedCategory === cat
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedCategory === cat
                       ? 'bg-primary text-black'
                       : 'bg-gray-800 text-gray-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   {cat}
                 </button>

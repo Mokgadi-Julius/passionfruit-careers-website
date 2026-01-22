@@ -8,8 +8,8 @@ import {
 import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
-import careersOffice from '../assets/pages/careers-office.png';
-import careersCulture from '../assets/pages/careers-culture.png';
+import careersOffice from '../assets/generated/hero-careers.png';
+import careersCulture from '../assets/generated/testimonial-thabo.png';
 
 const Careers = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -167,11 +167,10 @@ const Careers = () => {
               <button
                 key={dept}
                 onClick={() => setSelectedDepartment(dept)}
-                className={`px-4 py-2 rounded-full font-medium transition-all ${
-                  selectedDepartment === dept
+                className={`px-4 py-2 rounded-full font-medium transition-all ${selectedDepartment === dept
                     ? 'bg-primary text-black'
                     : 'bg-gray-800 text-gray-400 hover:text-white'
-                }`}
+                  }`}
               >
                 {dept}
               </button>

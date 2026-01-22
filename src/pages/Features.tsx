@@ -9,9 +9,9 @@ import {
 import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
-import featuresMatching from '../assets/pages/features-ai-matching.png';
-import featuresAutoapply from '../assets/pages/features-autoapply.png';
-import featuresAnalytics from '../assets/pages/features-analytics.png';
+import featuresMatching from '../assets/generated/step-matching.png';
+import featuresAutoapply from '../assets/generated/step-apply.png';
+import featuresAnalytics from '../assets/generated/service-insights.png';
 
 const Features = () => {
   const ref = useRef(null);

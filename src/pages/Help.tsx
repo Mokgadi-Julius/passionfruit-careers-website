@@ -9,7 +9,7 @@ import {
 import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
-import helpHero from '../assets/pages/help-hero.png';
+import helpHero from '../assets/generated/hero-help.png';
 
 const Help = () => {
   const [searchQuery, setSearchQuery] = useState('');

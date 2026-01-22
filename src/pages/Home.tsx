@@ -36,6 +36,7 @@ import testimonialPrecious from '../assets/generated/testimonial-precious.png';
 import officeTeam from '../assets/generated/office-team.png';
 import johannesburgFuture from '../assets/generated/johannesburg-future.png';
 
+
 // ============ 3D COMPONENTS ============
 const AnimatedSphere = () => {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -117,9 +118,8 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? 'bg-black/95 backdrop-blur-xl shadow-lg shadow-primary/10' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-xl shadow-lg shadow-primary/10' : 'bg-transparent'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <motion.a
@@ -741,9 +741,8 @@ const PricingSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`relative bg-gray-900/50 backdrop-blur border rounded-3xl p-8 ${
-                plan.popular ? 'border-primary scale-105 shadow-xl shadow-primary/20' : 'border-gray-800'
-              }`}
+              className={`relative bg-gray-900/50 backdrop-blur border rounded-3xl p-8 ${plan.popular ? 'border-primary scale-105 shadow-xl shadow-primary/20' : 'border-gray-800'
+                }`}
             >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-black px-4 py-1 rounded-full text-sm font-bold">
@@ -767,11 +766,10 @@ const PricingSection = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`w-full py-4 rounded-full font-bold transition-all ${
-                  plan.popular
+                className={`w-full py-4 rounded-full font-bold transition-all ${plan.popular
                     ? 'bg-primary text-black hover:bg-primary-light'
                     : 'border-2 border-gray-700 text-white hover:border-primary hover:text-primary'
-                }`}
+                  }`}
               >
                 {plan.cta}
               </motion.button>
@@ -1163,22 +1161,24 @@ const Footer = () => {
 };
 
 // ============ MAIN HOME PAGE ============
+import { Layout } from '../components/Layout';
+
 const Home = () => {
   return (
-    <div className="bg-black text-white overflow-x-hidden">
-      <Navbar />
-      <HeroSection />
-      <Marquee />
-      <AboutSection />
-      <HowItWorksSection />
-      <ServicesSection />
-      <PricingSection />
-      <TestimonialsSection />
-      <CompaniesSection />
-      <CTASection />
-      <ContactSection />
-      <Footer />
-    </div>
+    <Layout>
+      <div className="bg-black text-white overflow-x-hidden">
+        <HeroSection />
+        <Marquee />
+        <AboutSection />
+        <HowItWorksSection />
+        <ServicesSection />
+        <PricingSection />
+        <TestimonialsSection />
+        <CompaniesSection />
+        <CTASection />
+        <ContactSection />
+      </div>
+    </Layout>
   );
 };
 

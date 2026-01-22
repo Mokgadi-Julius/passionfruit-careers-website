@@ -8,7 +8,7 @@ import {
 import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
-import pressHero from '../assets/pages/press-hero.png';
+import pressHero from '../assets/generated/hero-press.png';
 
 const Press = () => {
   const pressReleases = [

@@ -8,8 +8,8 @@ import {
 import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
-import communityEvent from '../assets/pages/community-event.png';
-import communityOnline from '../assets/pages/community-online.png';
+import communityEvent from '../assets/generated/testimonial-sipho.png';
+import communityOnline from '../assets/generated/hero-community.png';
 
 const Community = () => {
   const stats = [
@@ -172,9 +172,8 @@ const Community = () => {
                         {event.date}
                       </span>
                       <span>{event.time}</span>
-                      <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                        event.type === 'Virtual' ? 'bg-blue-500/20 text-blue-400' : 'bg-green-500/20 text-green-400'
-                      }`}>
+                      <span className={`px-2 py-1 rounded-full text-xs font-bold ${event.type === 'Virtual' ? 'bg-blue-500/20 text-blue-400' : 'bg-green-500/20 text-green-400'
+                        }`}>
                         {event.type}
                       </span>
                     </div>

@@ -8,7 +8,7 @@ import {
 import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
-import integrationsHero from '../assets/pages/integrations-hero.png';
+import integrationsHero from '../assets/generated/hero-integrations.png';
 
 const Integrations = () => {
   const integrations = [
@@ -135,9 +135,8 @@ const Integrations = () => {
                       <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                         {item.icon}
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                        item.status === 'Available' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${item.status === 'Available' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+                        }`}>
                         {item.status}
                       </span>
                     </div>
