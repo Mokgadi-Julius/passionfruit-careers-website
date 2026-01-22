@@ -8,27 +8,30 @@ const __dirname = path.dirname(__filename);
 // Source image to copy (must exist)
 const sourceImage = path.join(__dirname, 'src', 'assets', 'hero.png');
 
-// Target directory for pages assets
-const targetDir = path.join(__dirname, 'src', 'assets', 'pages');
+// Target directory for generated assets
+const targetDir = path.join(__dirname, 'src', 'assets', 'generated');
 
 // List of all assets referenced in the code that might be missing
 const missingFiles = [
-    'about-founder.png',
-    'about-hero.png',
-    'about-values.png',
-    'blog-ai-future.png',
-    'blog-interview.png',
-    'blog-resume.png',
-    'careers-culture.png',
-    'careers-office.png',
-    'community-event.png',
-    'community-online.png',
-    'features-ai-matching.png',
-    'features-analytics.png',
-    'features-autoapply.png',
-    'help-hero.png',
-    'integrations-hero.png',
-    'press-hero.png'
+    'hero-team.png',
+    'hero-abstract.png',
+    'about-connection.png',
+    'service-resume.png',
+    'service-matching.png',
+    'service-autoapply.png',
+    'service-dashboard.png',
+    'service-insights.png',
+    'service-global.png',
+    'success-hired.png',
+    'step-upload.png',
+    'step-matching.png',
+    'step-apply.png',
+    'testimonial-thabo.png',
+    'testimonial-sarah.png',
+    'testimonial-sipho.png',
+    'testimonial-precious.png',
+    'office-team.png',
+    'johannesburg-future.png'
 ];
 
 // Ensure target directory exists
