@@ -9,7 +9,7 @@ import { Layout, PageHeader } from '../components/Layout';
 
 // Import images
 import aboutHero from '../assets/generated/hero-about.png';
-import aboutFounder from '../assets/generated/testimonial-precious.png';
+
 import aboutValues from '../assets/generated/success-hired.png';
 
 const About = () => {
@@ -43,12 +43,7 @@ const About = () => {
     { value: '25K+', label: 'Jobs Filled' },
   ];
 
-  const team = [
-    { name: 'Thandi Nkosi', role: 'CEO & Co-Founder', bio: 'Former HR Director with 15 years in talent acquisition' },
-    { name: 'James Williams', role: 'CTO & Co-Founder', bio: 'Ex-Google engineer specializing in ML and AI systems' },
-    { name: 'Priya Patel', role: 'Head of Product', bio: 'Product leader from LinkedIn and Microsoft' },
-    { name: 'David Okonkwo', role: 'Head of AI', bio: 'PhD in Machine Learning from UCT' },
-  ];
+
 
   const timeline = [
     { year: '2022', event: 'Passionfruit founded in Cape Town' },
@@ -225,68 +220,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-24 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-black text-white mb-4">Leadership Team</h2>
-            <p className="text-gray-400 text-lg">Meet the people behind Passionfruit</p>
-          </motion.div>
 
-          {/* Featured Founder */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-br from-primary/20 to-transparent border border-primary/30 rounded-3xl p-8 mb-12"
-          >
-            <div className="grid md:grid-cols-3 gap-8 items-center">
-              <div className="md:col-span-1">
-                <img
-                  src={aboutFounder}
-                  alt="Thandi Nkosi - CEO & Co-Founder"
-                  className="rounded-2xl w-full shadow-xl"
-                />
-              </div>
-              <div className="md:col-span-2">
-                <h3 className="text-white font-bold text-2xl mb-2">Thandi Nkosi</h3>
-                <div className="text-primary font-medium mb-4">CEO & Co-Founder</div>
-                <p className="text-gray-400 leading-relaxed">
-                  "We started Passionfruit because we believe everyone deserves access to opportunities that match their true potential.
-                  Our AI doesn't just match keywords - it understands careers, aspirations, and what makes people thrive.
-                  After 15 years in talent acquisition, I knew there had to be a better way."
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {team.slice(1).map((member, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 text-center hover:border-primary/50 transition-all"
-              >
-                <div className="w-24 h-24 bg-primary/20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Users className="w-10 h-10 text-primary" />
-                </div>
-                <h3 className="text-white font-bold text-lg">{member.name}</h3>
-                <div className="text-primary font-medium text-sm mb-2">{member.role}</div>
-                <p className="text-gray-400 text-sm">{member.bio}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="py-24 bg-primary">
