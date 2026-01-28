@@ -12,4 +12,13 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    proxy: {
+      '/api': {
+        target: 'https://adequate-rejoicing-production-b4ba.up.railway.app',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })
