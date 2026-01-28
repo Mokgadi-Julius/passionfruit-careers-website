@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Menu, X, Facebook, Twitter, Linkedin, Instagram
+  Menu, X, Facebook, Twitter, Linkedin, Instagram, User
 } from 'lucide-react';
 import logo from '../assets/logo.png';
 
@@ -54,20 +54,41 @@ export const Navbar = () => {
               </Link>
             </motion.div>
           ))}
-          <motion.div whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(244, 224, 77, 0.4)' }} whileTap={{ scale: 0.95 }}>
-            <a
-              href="https://app.passionfruitcareers.com"
-              className="bg-primary text-black px-6 py-2.5 rounded-full font-bold hover:bg-primary-light transition-colors ml-4"
-            >
-              Get Started
-            </a>
-          </motion.div>
+
+          <div className="flex items-center gap-3 ml-4">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <a
+                href="https://app.passionfruitcareers.com"
+                className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-300 hover:text-primary hover:border-primary transition-colors"
+                aria-label="Login"
+              >
+                <User className="w-5 h-5" />
+              </a>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(244, 224, 77, 0.4)' }} whileTap={{ scale: 0.95 }}>
+              <a
+                href="https://app.passionfruitcareers.com"
+                className="bg-primary text-black px-6 py-2.5 rounded-full font-bold hover:bg-primary-light transition-colors"
+              >
+                Get Started
+              </a>
+            </motion.div>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
-        <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-white p-2">
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="lg:hidden flex items-center gap-4">
+          <a
+            href="https://app.passionfruitcareers.com"
+            className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-300 hover:text-primary hover:border-primary transition-colors"
+            aria-label="Login"
+          >
+            <User className="w-5 h-5" />
+          </a>
+          <button onClick={() => setIsOpen(!isOpen)} className="text-white p-2">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav */}
