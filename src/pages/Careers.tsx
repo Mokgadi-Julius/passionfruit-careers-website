@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   MapPin, Clock, Briefcase, Heart, Coffee, Globe,
-  TrendingUp, Users, Zap, CheckCircle2, ArrowRight, Search
+  TrendingUp, Users, Zap, CheckCircle2, ArrowRight, Search, Loader2
 } from 'lucide-react';
 import { Layout, PageHeader } from '../components/Layout';
 
@@ -11,8 +11,41 @@ import { Layout, PageHeader } from '../components/Layout';
 import careersOffice from '../assets/generated/hero-careers.png';
 import careersCulture from '../assets/generated/testimonial-thabo.png';
 
+interface Job {
+  id: string;
+  title: string;
+  company: string;
+  location: string | null;
+  jobType: string | null;
+  salaryMin: string | null;
+  salaryMax: string | null;
+  salaryCurrency: string | null;
+  experienceLevel: string | null;
+  description: string;
+}
+
 const Careers = () => {
-  const [selectedDepartment, setSelectedDepartment] = useState('All');
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedType, setSelectedType] = useState('All');
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch('https://adequate-rejoicing-production-b4ba.up.railway.app/api/jobs');
+        if (response.ok) {
+          const data = await response.json();
+          setJobs(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch jobs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   const benefits = [
     { icon: <Heart className="w-6 h-6" />, title: 'Health & Wellness', desc: 'Medical aid, gym membership, mental health support' },
@@ -23,22 +56,24 @@ const Careers = () => {
     { icon: <Zap className="w-6 h-6" />, title: 'Equipment', desc: 'Latest MacBook + home office setup' },
   ];
 
-  const departments = ['All', 'Engineering', 'Product', 'Design', 'Marketing', 'Sales', 'Operations'];
+  // Derive job types from data
+  // const jobTypes = ['All', ...Array.from(new Set(jobs.map(j => j.jobType).filter(Boolean)))];
+  // Simplification for now, we can add logic if needed, but let's stick to a clean list first
+  // Actually, let's keep it simple and just show "All" if we don't have many categories yet
 
-  const jobs = [
-    { title: 'Senior Full-Stack Engineer', department: 'Engineering', location: 'Cape Town / Remote', type: 'Full-time', salary: 'R80K - R120K' },
-    { title: 'Machine Learning Engineer', department: 'Engineering', location: 'Cape Town / Remote', type: 'Full-time', salary: 'R90K - R130K' },
-    { title: 'Product Manager', department: 'Product', location: 'Cape Town', type: 'Full-time', salary: 'R70K - R100K' },
-    { title: 'Senior UX Designer', department: 'Design', location: 'Remote', type: 'Full-time', salary: 'R60K - R90K' },
-    { title: 'Content Marketing Manager', department: 'Marketing', location: 'Cape Town / Remote', type: 'Full-time', salary: 'R45K - R65K' },
-    { title: 'Enterprise Sales Executive', department: 'Sales', location: 'Johannesburg', type: 'Full-time', salary: 'R50K - R80K + Commission' },
-    { title: 'Customer Success Manager', department: 'Operations', location: 'Cape Town', type: 'Full-time', salary: 'R40K - R55K' },
-    { title: 'DevOps Engineer', department: 'Engineering', location: 'Remote', type: 'Full-time', salary: 'R70K - R100K' },
-  ];
+  const formatSalary = (min: string | null, max: string | null, currency: string | null) => {
+    if (!min && !max) return 'Competitive';
+    const curr = currency || 'R';
+    // Simple formatting
+    const formatNum = (num: string) => {
+      const n = parseInt(num);
+      return n > 999 ? (n / 1000).toFixed(0) + 'k' : n;
+    };
 
-  const filteredJobs = selectedDepartment === 'All'
-    ? jobs
-    : jobs.filter(job => job.department === selectedDepartment);
+    if (min && max) return `${curr}${formatNum(min)} - ${curr}${formatNum(max)}`;
+    if (min) return `${curr}${formatNum(min)}+`;
+    return 'Competitive';
+  };
 
   const values = [
     { title: 'Move Fast', desc: 'We ship quickly, learn from feedback, and iterate constantly.' },
@@ -161,66 +196,67 @@ const Careers = () => {
             <p className="text-gray-400 text-lg">Find your next role at Passionfruit</p>
           </motion.div>
 
-          {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {departments.map((dept) => (
-              <button
-                key={dept}
-                onClick={() => setSelectedDepartment(dept)}
-                className={`px-4 py-2 rounded-full font-medium transition-all ${selectedDepartment === dept
-                    ? 'bg-primary text-black'
-                    : 'bg-gray-800 text-gray-400 hover:text-white'
-                  }`}
-              >
-                {dept}
-              </button>
-            ))}
-          </div>
-
           {/* Job Listings */}
-          <div className="space-y-4">
-            {filteredJobs.map((job, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ x: 5 }}
-                className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer"
-              >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div>
-                    <h3 className="text-white font-bold text-lg mb-2">{job.title}</h3>
-                    <div className="flex flex-wrap items-center gap-4 text-sm">
-                      <span className="flex items-center gap-1 text-gray-400">
-                        <Briefcase className="w-4 h-4" />
-                        {job.department}
+          {loading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="w-10 h-10 text-primary animate-spin" />
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {jobs.map((job, i) => (
+                <motion.div
+                  key={job.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  whileHover={{ x: 5 }}
+                  className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <h3 className="text-white font-bold text-lg mb-2">{job.title}</h3>
+                      <div className="flex flex-wrap items-center gap-4 text-sm">
+                        <span className="flex items-center gap-1 text-gray-400">
+                          <Briefcase className="w-4 h-4" />
+                          {job.company || 'Passionfruit'}
+                        </span>
+                        {job.location && (
+                          <span className="flex items-center gap-1 text-gray-400">
+                            <MapPin className="w-4 h-4" />
+                            {job.location}
+                          </span>
+                        )}
+                        {job.jobType && (
+                          <span className="flex items-center gap-1 text-gray-400">
+                            <Clock className="w-4 h-4" />
+                            {job.jobType}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-primary font-bold">
+                        {formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)}
                       </span>
-                      <span className="flex items-center gap-1 text-gray-400">
-                        <MapPin className="w-4 h-4" />
-                        {job.location}
-                      </span>
-                      <span className="flex items-center gap-1 text-gray-400">
-                        <Clock className="w-4 h-4" />
-                        {job.type}
-                      </span>
+                      <a
+                        href={`https://app.passionfruitcareers.com/job/${job.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-primary text-black px-4 py-2 rounded-full font-bold hover:bg-primary-light transition-all flex items-center gap-1"
+                      >
+                        Apply <ArrowRight className="w-4 h-4" />
+                      </a>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-primary font-bold">{job.salary}</span>
-                    <button className="bg-primary text-black px-4 py-2 rounded-full font-bold hover:bg-primary-light transition-all flex items-center gap-1">
-                      Apply <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
 
-          {filteredJobs.length === 0 && (
+          {!loading && jobs.length === 0 && (
             <div className="text-center py-12">
               <Search className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-400">No positions found in this department.</p>
+              <p className="text-gray-400">No positions found currently.</p>
             </div>
           )}
         </div>
