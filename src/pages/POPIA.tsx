@@ -177,7 +177,6 @@ When your information is no longer needed, we securely delete or anonymize it.`,
 
 **Contact our Information Officer:**
 Email: privacy@passionfruit.careers
-Phone: +27 11 123 4567
 Address: Cape Town, South Africa
 
 **Use self-service options:**

@@ -1050,8 +1050,7 @@ const ContactSection = () => {
 
             <div className="space-y-4 mb-8">
               {[
-                { icon: <Mail className="w-5 h-5" />, label: 'Email Us', value: 'hello@passionfruit.careers' },
-                { icon: <Phone className="w-5 h-5" />, label: 'Call Us', value: '+27 11 123 4567' },
+                { icon: <Mail className="w-5 h-5" />, label: 'Email Us', value: 'info@passionfruitcareers.com' },
                 { icon: <MapPin className="w-5 h-5" />, label: 'Visit Us', value: 'Cape Town, South Africa' },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 text-black">

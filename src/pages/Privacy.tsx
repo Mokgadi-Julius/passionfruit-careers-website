@@ -149,7 +149,6 @@ Passionfruit Careers (Pty) Ltd
 Cape Town, South Africa
 
 Email: privacy@passionfruit.careers
-Phone: +27 11 123 4567
 
 For POPIA-related inquiries, please see our POPIA Compliance page.`,
     },

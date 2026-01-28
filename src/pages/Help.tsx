@@ -265,8 +265,7 @@ const Help = () => {
             >
               <Phone className="w-10 h-10 text-primary mx-auto mb-4" />
               <h3 className="text-white font-bold mb-2">Phone Support</h3>
-              <p className="text-gray-400 text-sm mb-4">Call us Mon-Fri, 9am-5pm SAST</p>
-              <a href="tel:+27111234567" className="text-primary font-bold">+27 11 123 4567</a>
+
             </motion.div>
           </div>
         </div>

@@ -120,8 +120,7 @@ We do not guarantee any specific outcomes from using our Service.`,
 
 Passionfruit Careers (Pty) Ltd
 Cape Town, South Africa
-Email: legal@passionfruit.careers
-Phone: +27 11 123 4567`,
+Email: legal@passionfruit.careers`,
     },
   ];
 
