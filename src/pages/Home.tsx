@@ -999,7 +999,7 @@ const CTASection = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.a
-              href="#contact"
+              href="https://app.passionfruitcareers.com"
               whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(244, 224, 77, 0.5)' }}
               whileTap={{ scale: 0.95 }}
               className="bg-primary text-black px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2"

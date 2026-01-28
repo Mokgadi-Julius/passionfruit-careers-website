@@ -167,14 +167,14 @@ const Features = () => {
               Join thousands of job seekers who've transformed their careers with Passionfruit.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/"
+              <a
+                href="https://app.passionfruitcareers.com"
                 className="bg-black text-white px-10 py-5 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-gray-800 transition-all"
               >
                 <Rocket className="w-5 h-5" />
                 Get Started Free
                 <ArrowRight className="w-5 h-5" />
-              </Link>
+              </a>
               <Link
                 to="/pricing"
                 className="border-2 border-black text-black px-10 py-5 rounded-full font-bold text-lg hover:bg-black hover:text-white transition-all"

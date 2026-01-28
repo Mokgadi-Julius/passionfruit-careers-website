@@ -218,12 +218,12 @@ const Integrations = () => {
           <p className="text-black/70 text-xl mb-10">
             Start integrating your tools with Passionfruit today.
           </p>
-          <Link
-            to="/"
+          <a
+            href="https://app.passionfruitcareers.com"
             className="inline-block bg-black text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-800 transition-all"
           >
             Get Started
-          </Link>
+          </a>
         </div>
       </section>
     </Layout>

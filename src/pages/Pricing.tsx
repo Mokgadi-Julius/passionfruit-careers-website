@@ -109,9 +109,8 @@ const Pricing = () => {
               className={`relative w-14 h-7 rounded-full transition-colors ${isAnnual ? 'bg-primary' : 'bg-gray-700'}`}
             >
               <div
-                className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-transform ${
-                  isAnnual ? 'translate-x-8' : 'translate-x-1'
-                }`}
+                className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-transform ${isAnnual ? 'translate-x-8' : 'translate-x-1'
+                  }`}
               />
             </button>
             <span className={`font-medium ${isAnnual ? 'text-white' : 'text-gray-500'}`}>
@@ -131,9 +130,8 @@ const Pricing = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`relative bg-gray-900/50 backdrop-blur border rounded-3xl p-8 ${
-                  plan.popular ? 'border-primary scale-105 shadow-xl shadow-primary/20' : 'border-gray-800'
-                }`}
+                className={`relative bg-gray-900/50 backdrop-blur border rounded-3xl p-8 ${plan.popular ? 'border-primary scale-105 shadow-xl shadow-primary/20' : 'border-gray-800'
+                  }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-black px-4 py-1 rounded-full text-sm font-bold">
@@ -158,17 +156,17 @@ const Pricing = () => {
                     </li>
                   ))}
                 </ul>
-                <motion.button
+                <motion.a
+                  href={plan.name === 'Employer' ? 'mailto:sales@passionfruitcareers.com' : 'https://app.passionfruitcareers.com'}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`w-full py-4 rounded-full font-bold transition-all ${
-                    plan.popular
+                  className={`block w-full text-center py-4 rounded-full font-bold transition-all ${plan.popular
                       ? 'bg-primary text-black hover:bg-primary-light'
                       : 'border-2 border-gray-700 text-white hover:border-primary hover:text-primary'
-                  }`}
+                    }`}
                 >
                   {plan.cta}
-                </motion.button>
+                </motion.a>
               </motion.div>
             ))}
           </div>
@@ -264,12 +262,12 @@ const Pricing = () => {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-black text-black mb-6">Ready to Get Started?</h2>
           <p className="text-black/70 text-xl mb-10">Join thousands who've found their dream careers with Passionfruit.</p>
-          <Link
-            to="/"
+          <a
+            href="https://app.passionfruitcareers.com"
             className="inline-block bg-black text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-800 transition-all"
           >
             Start Free Today
-          </Link>
+          </a>
         </div>
       </section>
     </Layout>
