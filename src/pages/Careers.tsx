@@ -27,7 +27,10 @@ interface Job {
 const Careers = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedType, setSelectedType] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('Latest');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -36,6 +39,7 @@ const Careers = () => {
         const response = await fetch('/api/jobs');
         if (response.ok) {
           const data = await response.json();
+          // Assuming API returns items in "Latest" order by default, we preserve that as initial state
           setJobs(data);
         }
       } catch (error) {
@@ -48,6 +52,37 @@ const Careers = () => {
     fetchJobs();
   }, []);
 
+  // Filter and Sort Logic
+  const filteredJobs = jobs.filter(job => {
+    const term = searchTerm.toLowerCase();
+    return (
+      job.title.toLowerCase().includes(term) ||
+      (job.company && job.company.toLowerCase().includes(term)) ||
+      (job.location && job.location.toLowerCase().includes(term))
+    );
+  });
+
+  const sortedJobs = [...filteredJobs].sort((a, b) => {
+    if (sortOption === 'Latest') return 0; // Keep default API order (usually latest first) or strictly by ID if sequential
+    if (sortOption === 'Oldest') return -1; // Reverse default
+
+    const getSalary = (j: Job) => {
+      if (!j.salaryMin) return 0;
+      return parseInt(j.salaryMin) || 0;
+    };
+
+    if (sortOption === 'SalaryHigh') return getSalary(b) - getSalary(a);
+    if (sortOption === 'SalaryLow') return getSalary(a) - getSalary(b);
+
+    return 0;
+  });
+
+  // Pagination Logic
+  const indexOfLastJob = currentPage * itemsPerPage;
+  const indexOfFirstJob = indexOfLastJob - itemsPerPage;
+  const currentJobs = sortedJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(sortedJobs.length / itemsPerPage);
+
   const benefits = [
     { icon: <Heart className="w-6 h-6" />, title: 'Health & Wellness', desc: 'Medical aid, gym membership, mental health support' },
     { icon: <Coffee className="w-6 h-6" />, title: 'Flexible Work', desc: 'Remote-first with flexible hours' },
@@ -56,11 +91,6 @@ const Careers = () => {
     { icon: <Globe className="w-6 h-6" />, title: 'Leave', desc: '25 days annual leave + birthday off' },
     { icon: <Zap className="w-6 h-6" />, title: 'Equipment', desc: 'Latest MacBook + home office setup' },
   ];
-
-  // Derive job types from data
-  // const jobTypes = ['All', ...Array.from(new Set(jobs.map(j => j.jobType).filter(Boolean)))];
-  // Simplification for now, we can add logic if needed, but let's stick to a clean list first
-  // Actually, let's keep it simple and just show "All" if we don't have many categories yet
 
   const formatSalary = (min: string | null, max: string | null, currency: string | null) => {
     if (!min && !max) return 'Competitive';
@@ -197,60 +227,150 @@ const Careers = () => {
             <p className="text-gray-400 text-lg">Find your next role at Passionfruit</p>
           </motion.div>
 
+          {/* Search and Filter Controls */}
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="relative flex-grow">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search by title, company, or location..."
+                className="w-full bg-gray-900 border border-gray-800 text-white pl-12 pr-4 py-3 rounded-xl focus:outline-none focus:border-primary transition-colors"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1); // Reset to first page on search
+                }}
+              />
+            </div>
+            <div className="relative min-w-[200px]">
+              <select
+                className="w-full bg-gray-900 border border-gray-800 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-primary transition-colors appearance-none cursor-pointer"
+                value={sortOption}
+                onChange={(e) => {
+                  setSortOption(e.target.value);
+                  setCurrentPage(1);
+                }}
+              >
+                <option value="Latest">Latest</option>
+                <option value="Oldest">Oldest</option>
+                <option value="SalaryHigh">Salary (High to Low)</option>
+                <option value="SalaryLow">Salary (Low to High)</option>
+              </select>
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
           {/* Job Listings */}
           {loading ? (
             <div className="flex justify-center py-12">
               <Loader2 className="w-10 h-10 text-primary animate-spin" />
             </div>
           ) : (
-            <div className="space-y-4">
-              {jobs.map((job, i) => (
-                <motion.div
-                  key={job.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  whileHover={{ x: 5 }}
-                  className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer"
-                >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                      <h3 className="text-white font-bold text-lg mb-2">{job.title}</h3>
-                      <div className="flex flex-wrap items-center gap-4 text-sm">
-                        <span className="flex items-center gap-1 text-gray-400">
-                          <Briefcase className="w-4 h-4" />
-                          {job.company || 'Passionfruit'}
+            <>
+              <div className="space-y-4">
+                {currentJobs.map((job, i) => (
+                  <motion.div
+                    key={job.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    whileHover={{ x: 5 }}
+                    className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer"
+                  >
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div>
+                        <h3 className="text-white font-bold text-lg mb-2">{job.title}</h3>
+                        <div className="flex flex-wrap items-center gap-4 text-sm">
+                          <span className="flex items-center gap-1 text-gray-400">
+                            <Briefcase className="w-4 h-4" />
+                            {job.company || 'Passionfruit'}
+                          </span>
+                          {job.location && (
+                            <span className="flex items-center gap-1 text-gray-400">
+                              <MapPin className="w-4 h-4" />
+                              {job.location}
+                            </span>
+                          )}
+                          {job.jobType && (
+                            <span className="flex items-center gap-1 text-gray-400">
+                              <Clock className="w-4 h-4" />
+                              {job.jobType}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="text-primary font-bold">
+                          {formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)}
                         </span>
-                        {job.location && (
-                          <span className="flex items-center gap-1 text-gray-400">
-                            <MapPin className="w-4 h-4" />
-                            {job.location}
-                          </span>
-                        )}
-                        {job.jobType && (
-                          <span className="flex items-center gap-1 text-gray-400">
-                            <Clock className="w-4 h-4" />
-                            {job.jobType}
-                          </span>
-                        )}
+                        <a
+                          href={`https://app.passionfruitcareers.com/job/${job.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-primary text-black px-4 py-2 rounded-full font-bold hover:bg-primary-light transition-all flex items-center gap-1"
+                        >
+                          Apply <ArrowRight className="w-4 h-4" />
+                        </a>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <span className="text-primary font-bold">
-                        {formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency)}
-                      </span>
-                      <a
-                        href={`https://app.passionfruitcareers.com/job/${job.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-primary text-black px-4 py-2 rounded-full font-bold hover:bg-primary-light transition-all flex items-center gap-1"
-                      >
-                        Apply <ArrowRight className="w-4 h-4" />
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-2 mt-12">
+                  <button
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="p-2 rounded-lg border border-gray-800 text-gray-400 hover:text-white hover:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`w-10 h-10 rounded-lg border font-medium transition-colors ${currentPage === page
+                        ? 'bg-primary border-primary text-black'
+                        : 'bg-transparent border-gray-800 text-gray-400 hover:text-white hover:border-gray-700'
+                        }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="p-2 rounded-lg border border-gray-800 text-gray-400 hover:text-white hover:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {!loading && jobs.length > 0 && filteredJobs.length === 0 && (
+            <div className="text-center py-12">
+              <Search className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-400 text-lg mb-2">No matches found for "{searchTerm}"</p>
+              <button
+                onClick={() => setSearchTerm('')}
+                className="text-primary font-bold hover:underline"
+              >
+                Clear search
+              </button>
             </div>
           )}
 
