@@ -143,77 +143,6 @@ const Careers = () => {
         </div>
       </section>
 
-      {/* Why Join Us */}
-      <section className="py-24 bg-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-black text-white mb-4">Why Use Our Platform?</h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              We offer more than just a job board - we offer a chance to make real impact
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6"
-              >
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4">
-                  {benefit.icon}
-                </div>
-                <h3 className="text-white font-bold text-lg mb-2">{benefit.title}</h3>
-                <p className="text-gray-400 text-sm">{benefit.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Our Values */}
-      <section className="py-24 bg-gray-900">
-        <div className="max-w-5xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-black text-white mb-4">What Employers Value</h2>
-            <p className="text-gray-400 text-lg">Qualities top companies look for</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {values.map((value, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 flex items-start gap-4"
-              >
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-black font-bold flex-shrink-0">
-                  {i + 1}
-                </div>
-                <div>
-                  <h3 className="text-white font-bold text-lg mb-1">{value.title}</h3>
-                  <p className="text-gray-400">{value.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Open Positions */}
       <section className="py-24 bg-black">
         <div className="max-w-5xl mx-auto px-6">
@@ -383,7 +312,43 @@ const Careers = () => {
         </div>
       </section>
 
-      {/* Application Process */}
+      {/* Why Use Our Platform */}
+      <section className="py-24 bg-black">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-black text-white mb-4">Why Use Our Platform?</h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              We offer more than just a job board - we offer a chance to make real impact
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {benefits.map((benefit, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6"
+              >
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-4">
+                  {benefit.icon}
+                </div>
+                <h3 className="text-white font-bold text-lg mb-2">{benefit.title}</h3>
+                <p className="text-gray-400 text-sm">{benefit.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Values */}
       <section className="py-24 bg-gray-900">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div
@@ -392,30 +357,26 @@ const Careers = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-black text-white mb-4">Our Hiring Process</h2>
-            <p className="text-gray-400 text-lg">What to expect when you apply</p>
+            <h2 className="text-4xl font-black text-white mb-4">What Employers Value</h2>
+            <p className="text-gray-400 text-lg">Qualities top companies look for</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-4 gap-6">
-            {[
-              { step: '1', title: 'Apply', desc: 'Submit your application and CV' },
-              { step: '2', title: 'Screen', desc: 'Quick chat with our recruiting team' },
-              { step: '3', title: 'Interview', desc: 'Technical and culture interviews' },
-              { step: '4', title: 'Offer', desc: 'Welcome to the team!' },
-            ].map((item, i) => (
+          <div className="grid md:grid-cols-2 gap-6">
+            {values.map((value, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center"
+                className="bg-gray-800/50 border border-gray-700 rounded-2xl p-6 flex items-start gap-4"
               >
-                <div className="w-12 h-12 bg-primary text-black font-black text-xl rounded-full flex items-center justify-center mx-auto mb-4">
-                  {item.step}
+                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-black font-bold flex-shrink-0">
+                  {i + 1}
                 </div>
-                <h3 className="text-white font-bold mb-2">{item.title}</h3>
-                <p className="text-gray-400 text-sm">{item.desc}</p>
+                <div>
+                  <h3 className="text-white font-bold text-lg mb-1">{value.title}</h3>
+                  <p className="text-gray-400">{value.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
