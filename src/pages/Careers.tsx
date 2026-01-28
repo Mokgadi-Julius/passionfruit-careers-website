@@ -84,12 +84,12 @@ const Careers = () => {
   const totalPages = Math.ceil(sortedJobs.length / itemsPerPage);
 
   const benefits = [
-    { icon: <Heart className="w-6 h-6" />, title: 'Health & Wellness', desc: 'Medical aid, gym membership, mental health support' },
-    { icon: <Coffee className="w-6 h-6" />, title: 'Flexible Work', desc: 'Remote-first with flexible hours' },
-    { icon: <TrendingUp className="w-6 h-6" />, title: 'Growth', desc: 'Learning budget and career development' },
-    { icon: <Users className="w-6 h-6" />, title: 'Team Culture', desc: 'Regular team events and offsites' },
-    { icon: <Globe className="w-6 h-6" />, title: 'Leave', desc: '25 days annual leave + birthday off' },
-    { icon: <Zap className="w-6 h-6" />, title: 'Equipment', desc: 'Latest MacBook + home office setup' },
+    { icon: <Heart className="w-6 h-6" />, title: 'Verified Benefits', desc: 'Find roles with medical aid and mental health support' },
+    { icon: <Coffee className="w-6 h-6" />, title: 'Remote Options', desc: 'Filter for remote-first and flexible companies' },
+    { icon: <TrendingUp className="w-6 h-6" />, title: 'Career Growth', desc: 'Employers that invest in your development' },
+    { icon: <Users className="w-6 h-6" />, title: 'Great Culture', desc: 'Join teams with vetted work environments' },
+    { icon: <Globe className="w-6 h-6" />, title: 'Work-Life Balance', desc: 'Competitive leave policies and flexibility' },
+    { icon: <Zap className="w-6 h-6" />, title: 'Modern Tools', desc: 'Work with the latest tech and equipment' },
   ];
 
   const formatSalary = (min: string | null, max: string | null, currency: string | null) => {
@@ -107,18 +107,18 @@ const Careers = () => {
   };
 
   const values = [
-    { title: 'Move Fast', desc: 'We ship quickly, learn from feedback, and iterate constantly.' },
-    { title: 'Be Transparent', desc: 'We share information openly and communicate directly.' },
-    { title: 'Think Big', desc: 'We set ambitious goals and find creative ways to achieve them.' },
-    { title: 'Care Deeply', desc: 'We genuinely care about our users, our team, and our mission.' },
+    { title: 'Speed', desc: 'Dynamic teams that ship fast and iterate constantly.' },
+    { title: 'Transparency', desc: 'Companies that share information openly.' },
+    { title: 'Innovation', desc: 'Ambitious goals and creative problem solving.' },
+    { title: 'Impact', desc: 'Meaningful work that makes a difference.' },
   ];
 
   return (
     <Layout>
       <PageHeader
         tag="Careers"
-        title="Join Our Mission"
-        subtitle="Help us transform how South Africa finds work. We're building something special, and we want you to be part of it."
+        title="Explore Recent Careers"
+        subtitle="Discover opportunities from top companies using Passionfruit's AI-powered platform."
       />
 
       {/* Hero Images */}
@@ -152,9 +152,9 @@ const Careers = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-black text-white mb-4">Why Passionfruit?</h2>
+            <h2 className="text-4xl font-black text-white mb-4">Why Use Our Platform?</h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              We offer more than just a job - we offer a chance to make real impact
+              We offer more than just a job board - we offer a chance to make real impact
             </p>
           </motion.div>
 
@@ -188,8 +188,8 @@ const Careers = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-black text-white mb-4">Our Values</h2>
-            <p className="text-gray-400 text-lg">What drives us every day</p>
+            <h2 className="text-4xl font-black text-white mb-4">What Employers Value</h2>
+            <p className="text-gray-400 text-lg">Qualities top companies look for</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -425,16 +425,26 @@ const Careers = () => {
       {/* CTA */}
       <section className="py-24 bg-primary">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-black text-black mb-6">Don't See Your Role?</h2>
+          <h2 className="text-4xl font-black text-black mb-6">Hiring?</h2>
           <p className="text-black/70 text-xl mb-10">
-            We're always looking for talented people. Send us your CV and we'll keep you in mind for future opportunities.
+            Post your job on Passionfruit and reach thousands of qualified candidates today.
           </p>
-          <a
-            href="mailto:careers@passionfruit.careers"
-            className="inline-block bg-black text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-800 transition-all"
-          >
-            Send Your CV
-          </a>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href="mailto:hiring@passionfruit.careers"
+              className="bg-black text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition-all flex items-center justify-center gap-2"
+            >
+              Post a Job
+            </a>
+            <a
+              href="https://app.passionfruitcareers.com/register"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/20 border-2 border-black/10 text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition-all"
+            >
+              Join Talent Pool
+            </a>
+          </div>
         </div>
       </section>
     </Layout>
