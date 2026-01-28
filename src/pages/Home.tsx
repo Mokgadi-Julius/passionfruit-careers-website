@@ -273,7 +273,7 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4"
           >
             <motion.a
-              href="#contact"
+              href="https://passionfruit-careers-production.up.railway.app"
               whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(244, 224, 77, 0.5)' }}
               whileTap={{ scale: 0.95 }}
               className="group bg-primary text-black px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-primary-light transition-all"
@@ -441,11 +441,12 @@ const AboutSection = () => {
             </div>
 
             <motion.a
-              href="#services"
+              href="https://passionfruit-careers-production.up.railway.app"
               whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center gap-2 bg-primary text-black px-6 py-3 rounded-full font-bold"
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-900 transition-colors"
             >
-              Explore Services <ChevronRight className="w-5 h-5" />
+              Get Started Now <ArrowRight className="w-5 h-5" />
             </motion.a>
           </motion.div>
         </div>
@@ -815,16 +816,17 @@ const PricingSection = () => {
                     </li>
                   ))}
                 </ul>
-                <motion.button
+                <motion.a
+                  href="https://passionfruit-careers-production.up.railway.app"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`w-full py-4 rounded-full font-bold transition-all ${plan.popular
+                  className={`block w-full text-center py-4 rounded-full font-bold transition-all ${plan.popular
                     ? 'bg-primary text-black hover:bg-primary-light'
                     : 'border-2 border-gray-700 text-white hover:border-primary hover:text-primary'
                     }`}
                 >
                   {plan.cta}
-                </motion.button>
+                </motion.a>
               </motion.div>
             ))}
           </AnimatePresence>

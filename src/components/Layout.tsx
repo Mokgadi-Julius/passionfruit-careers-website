@@ -31,9 +31,8 @@ export const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? 'bg-black/95 backdrop-blur-xl shadow-lg shadow-primary/10' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-xl shadow-lg shadow-primary/10' : 'bg-transparent'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <motion.div whileHover={{ scale: 1.05 }}>
@@ -48,21 +47,20 @@ export const Navbar = () => {
             <motion.div key={link.href} whileHover={{ y: -2 }}>
               <Link
                 to={link.href}
-                className={`transition-colors font-medium text-sm ${
-                  location.pathname === link.href ? 'text-primary' : 'text-gray-300 hover:text-primary'
-                }`}
+                className={`transition-colors font-medium text-sm ${location.pathname === link.href ? 'text-primary' : 'text-gray-300 hover:text-primary'
+                  }`}
               >
                 {link.label}
               </Link>
             </motion.div>
           ))}
           <motion.div whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(244, 224, 77, 0.4)' }} whileTap={{ scale: 0.95 }}>
-            <Link
-              to="/"
+            <a
+              href="https://passionfruit-careers-production.up.railway.app"
               className="bg-primary text-black px-6 py-2.5 rounded-full font-bold hover:bg-primary-light transition-colors ml-4"
             >
               Get Started
-            </Link>
+            </a>
           </motion.div>
         </div>
 
@@ -87,20 +85,19 @@ export const Navbar = () => {
                   key={link.href}
                   to={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`block transition-colors font-medium py-2 ${
-                    location.pathname === link.href ? 'text-primary' : 'text-gray-300 hover:text-primary'
-                  }`}
+                  className={`block transition-colors font-medium py-2 ${location.pathname === link.href ? 'text-primary' : 'text-gray-300 hover:text-primary'
+                    }`}
                 >
                   {link.label}
                 </Link>
               ))}
-              <Link
-                to="/"
+              <a
+                href="https://passionfruit-careers-production.up.railway.app"
                 onClick={() => setIsOpen(false)}
                 className="block bg-primary text-black px-6 py-3 rounded-full font-bold text-center"
               >
                 Get Started
-              </Link>
+              </a>
             </div>
           </motion.div>
         )}
