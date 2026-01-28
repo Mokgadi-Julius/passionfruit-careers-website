@@ -56,7 +56,7 @@ export const Navbar = () => {
           ))}
           <motion.div whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(244, 224, 77, 0.4)' }} whileTap={{ scale: 0.95 }}>
             <a
-              href="https://passionfruit-careers-production.up.railway.app"
+              href="https://app.passionfruitcareers.com"
               className="bg-primary text-black px-6 py-2.5 rounded-full font-bold hover:bg-primary-light transition-colors ml-4"
             >
               Get Started
@@ -92,7 +92,7 @@ export const Navbar = () => {
                 </Link>
               ))}
               <a
-                href="https://passionfruit-careers-production.up.railway.app"
+                href="https://app.passionfruitcareers.com"
                 onClick={() => setIsOpen(false)}
                 className="block bg-primary text-black px-6 py-3 rounded-full font-bold text-center"
               >
