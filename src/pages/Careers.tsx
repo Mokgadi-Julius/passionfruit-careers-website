@@ -93,16 +93,23 @@ const Careers = () => {
   ];
 
   const formatSalary = (min: string | null, max: string | null, currency: string | null) => {
+    // Return "Competitive" if both are missing (null, undefined, or empty string via ! check)
     if (!min && !max) return 'Competitive';
+
+    // Fallback currency
     const curr = currency || 'R';
-    // Simple formatting
+
     const formatNum = (num: string) => {
-      const n = parseInt(num);
-      return n > 999 ? (n / 1000).toFixed(0) + 'k' : n;
+      // Handle non-numeric strings safely
+      const n = parseInt(num, 10);
+      if (isNaN(n)) return num; // Return original if parsing fails
+      return n > 999 ? (n / 1000).toFixed(0) + 'k' : n.toString();
     };
 
     if (min && max) return `${curr}${formatNum(min)} - ${curr}${formatNum(max)}`;
     if (min) return `${curr}${formatNum(min)}+`;
+    if (max) return `Up to ${curr}${formatNum(max)}`;
+
     return 'Competitive';
   };
 
@@ -263,18 +270,47 @@ const Careers = () => {
                     </svg>
                   </button>
 
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`w-10 h-10 rounded-lg border font-medium transition-colors ${currentPage === page
-                        ? 'bg-primary border-primary text-black'
-                        : 'bg-transparent border-gray-800 text-gray-400 hover:text-white hover:border-gray-700'
-                        }`}
-                    >
-                      {page}
-                    </button>
-                  ))}
+                  {(() => {
+                    // Smart Pagination Logic
+                    const window = 1; // Number of pages to show around current
+                    const range = [];
+                    const rangeWithDots = [];
+                    let l;
+
+                    for (let i = 1; i <= totalPages; i++) {
+                      if (i === 1 || i === totalPages || (i >= currentPage - window && i <= currentPage + window)) {
+                        range.push(i);
+                      }
+                    }
+
+                    for (let i of range) {
+                      if (l) {
+                        if (i - l === 2) {
+                          rangeWithDots.push(l + 1);
+                        } else if (i - l !== 1) {
+                          rangeWithDots.push('...');
+                        }
+                      }
+                      rangeWithDots.push(i);
+                      l = i;
+                    }
+
+                    return rangeWithDots.map((page, index) => (
+                      <button
+                        key={index}
+                        onClick={() => typeof page === 'number' && setCurrentPage(page)}
+                        disabled={page === '...'}
+                        className={`min-w-[40px] h-10 px-2 rounded-lg border font-medium transition-colors ${page === currentPage
+                          ? 'bg-primary border-primary text-black'
+                          : page === '...'
+                            ? 'bg-transparent border-transparent text-gray-500 cursor-default'
+                            : 'bg-transparent border-gray-800 text-gray-400 hover:text-white hover:border-gray-700'
+                          }`}
+                      >
+                        {page}
+                      </button>
+                    ));
+                  })()}
 
                   <button
                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
