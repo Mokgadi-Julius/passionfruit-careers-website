@@ -662,9 +662,11 @@ const ServicesSection = () => {
 const PricingSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [pricingMode, setPricingMode] = useState<'seeker' | 'employer'>('seeker');
 
   const plans = [
     {
+      type: 'seeker',
       name: 'Job Seeker',
       price: 'Free',
       period: 'Forever',
@@ -680,6 +682,7 @@ const PricingSection = () => {
       popular: false,
     },
     {
+      type: 'seeker',
       name: 'Pro Seeker',
       price: 'R99',
       period: '/month',
@@ -696,6 +699,7 @@ const PricingSection = () => {
       popular: true,
     },
     {
+      type: 'employer',
       name: 'Employer',
       price: 'R15',
       period: '/credit',
@@ -709,9 +713,28 @@ const PricingSection = () => {
         'Dedicated account manager',
       ],
       cta: 'Contact Sales',
-      popular: false,
+      popular: false, // Changed to false for consistency in data structure, logic handles styling
+    },
+    {
+      type: 'employer',
+      name: 'Enterprise',
+      price: 'Custom',
+      period: '',
+      desc: 'For large organizations with high volume hiring needs',
+      features: [
+        'Unlimited job postings',
+        'Custom AI model training',
+        'API access',
+        'White-label options',
+        'SSO & Advanced Security',
+        '24/7 Dedicated Support',
+      ],
+      cta: 'Contact Sales',
+      popular: true,
     },
   ];
+
+  const filteredPlans = plans.filter(plan => plan.type === pricingMode);
 
   return (
     <section id="pricing" ref={ref} className="py-24 bg-black relative overflow-hidden">
@@ -722,59 +745,89 @@ const PricingSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <span className="text-primary font-bold text-sm tracking-wider uppercase">Pricing</span>
           <h2 className="text-4xl md:text-5xl font-black text-white mt-4 mb-6">
             Simple, Transparent
             <span className="text-primary"> Pricing</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
             Start for free as a job seeker. Employers pay only for what they use.
           </p>
-        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, i) => (
+          {/* Toggle */}
+          <div className="inline-flex bg-gray-900 border border-gray-800 rounded-full p-1 relative">
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`relative bg-gray-900/50 backdrop-blur border rounded-3xl p-8 ${plan.popular ? 'border-primary scale-105 shadow-xl shadow-primary/20' : 'border-gray-800'
+              className="absolute top-1 bottom-1 bg-primary rounded-full z-0"
+              initial={false}
+              animate={{
+                x: pricingMode === 'seeker' ? 0 : '100%',
+                width: '50%'
+              }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
+            <button
+              onClick={() => setPricingMode('seeker')}
+              className={`relative z-10 px-8 py-3 rounded-full font-bold transition-colors ${pricingMode === 'seeker' ? 'text-black' : 'text-gray-400 hover:text-white'
                 }`}
             >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-black px-4 py-1 rounded-full text-sm font-bold">
-                  Most Popular
-                </div>
-              )}
-              <h3 className="text-white font-bold text-2xl mb-2">{plan.name}</h3>
-              <p className="text-gray-400 text-sm mb-6">{plan.desc}</p>
-              <div className="mb-6">
-                <span className="text-5xl font-black text-white">{plan.price}</span>
-                <span className="text-gray-400">{plan.period}</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature, j) => (
-                  <li key={j} className="flex items-center gap-3 text-gray-300 text-sm">
-                    <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`w-full py-4 rounded-full font-bold transition-all ${plan.popular
-                    ? 'bg-primary text-black hover:bg-primary-light'
-                    : 'border-2 border-gray-700 text-white hover:border-primary hover:text-primary'
+              Job Seekers
+            </button>
+            <button
+              onClick={() => setPricingMode('employer')}
+              className={`relative z-10 px-8 py-3 rounded-full font-bold transition-colors ${pricingMode === 'employer' ? 'text-black' : 'text-gray-400 hover:text-white'
+                }`}
+            >
+              Employers
+            </button>
+          </div>
+        </motion.div>
+
+        <div className={`grid md:grid-cols-${filteredPlans.length} gap-8 max-w-${filteredPlans.length === 2 ? '4xl' : '5xl'} mx-auto`}>
+          <AnimatePresence mode='wait'>
+            {filteredPlans.map((plan, i) => (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.3, delay: i * 0.1 }}
+                className={`relative bg-gray-900/50 backdrop-blur border rounded-3xl p-8 ${plan.popular ? 'border-primary shadow-xl shadow-primary/20 transform md:-translate-y-4' : 'border-gray-800'
                   }`}
               >
-                {plan.cta}
-              </motion.button>
-            </motion.div>
-          ))}
+                {plan.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-black px-4 py-1 rounded-full text-sm font-bold shadow-lg">
+                    Most Popular
+                  </div>
+                )}
+                <h3 className="text-white font-bold text-2xl mb-2">{plan.name}</h3>
+                <p className="text-gray-400 text-sm mb-6">{plan.desc}</p>
+                <div className="mb-6">
+                  <span className="text-5xl font-black text-white">{plan.price}</span>
+                  <span className="text-gray-400">{plan.period}</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, j) => (
+                    <li key={j} className="flex items-center gap-3 text-gray-300 text-sm">
+                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`w-full py-4 rounded-full font-bold transition-all ${plan.popular
+                    ? 'bg-primary text-black hover:bg-primary-light'
+                    : 'border-2 border-gray-700 text-white hover:border-primary hover:text-primary'
+                    }`}
+                >
+                  {plan.cta}
+                </motion.button>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>
@@ -1168,11 +1221,11 @@ const Home = () => {
     <Layout>
       <div className="bg-black text-white overflow-x-hidden">
         <HeroSection />
+        <PricingSection />
         <Marquee />
         <AboutSection />
         <HowItWorksSection />
         <ServicesSection />
-        <PricingSection />
         <TestimonialsSection />
         <CompaniesSection />
         <CTASection />
