@@ -32,7 +32,8 @@ const Careers = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch('https://adequate-rejoicing-production-b4ba.up.railway.app/api/jobs');
+        // Use relative path to leverage proxy (dev) and redirects (prod)
+        const response = await fetch('/api/jobs');
         if (response.ok) {
           const data = await response.json();
           setJobs(data);

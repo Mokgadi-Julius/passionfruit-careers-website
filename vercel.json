@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/:path*",
+            "destination": "https://adequate-rejoicing-production-b4ba.up.railway.app/api/:path*"
+        }
+    ]
+}
