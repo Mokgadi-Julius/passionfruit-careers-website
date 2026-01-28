@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(
     '/api',
     createProxyMiddleware({
-        target: 'https://adequate-rejoicing-production-b4ba.up.railway.app',
+        target: 'https://adequate-rejoicing-production-b4ba.up.railway.app/api',
         changeOrigin: true,
         secure: false, // Accept self-signed certs if needed
     })
