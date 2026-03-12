@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-    MapPin, Briefcase, Clock, DollarSign, Building2, ExternalLink,
+    MapPin, Briefcase, Clock, Building2, ExternalLink,
     Share2, ArrowLeft, Users, Eye, Sparkles, CheckCircle2, Copy, Check
 } from 'lucide-react';
 import { Layout } from '../components/Layout';
@@ -226,7 +226,7 @@ const JobPage = () => {
                                 )}
                                 {salary && (
                                     <span className="inline-flex items-center gap-1.5 bg-primary/20 text-primary px-3 py-1.5 rounded-full text-sm font-medium">
-                                        <DollarSign className="w-3.5 h-3.5" />
+                                        <span className="font-bold text-xs">R</span>
                                         {salary}
                                     </span>
                                 )}
