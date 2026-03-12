@@ -17,6 +17,7 @@ import {
   Privacy,
   Cookies,
   POPIA,
+  JobPage,
 } from './pages';
 
 // Scroll to top on route change
@@ -60,6 +61,9 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/cookies" element={<Cookies />} />
         <Route path="/popia" element={<POPIA />} />
+
+        {/* Job Pages */}
+        <Route path="/jobs/:id" element={<JobPage />} />
 
         {/* 404 - Redirect to Home */}
         <Route path="*" element={<Home />} />

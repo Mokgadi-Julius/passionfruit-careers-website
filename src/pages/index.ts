@@ -23,3 +23,6 @@ export { default as POPIA } from './POPIA';
 
 // Home Page
 export { default as Home } from './Home';
+
+// Job Pages
+export { default as JobPage } from './JobPage';
